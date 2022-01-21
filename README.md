@@ -1,2 +1,12 @@
 # test-stylelint
-常用的 stylelint 检测
+
+```js
+    // .stylelintrc.js
+    module.exports = {
+        extends: [
+            '@zzzz-/stylelint-config-test',
+        ],
+    }
+```
+
+

@@ -1,9 +1,9 @@
 module.exports = {
     ignorePatterns: [
         '!.stylelintrc.js',
-        '!.eslintrc.js'
+        '!.eslintrc.js',
     ],
     extends: [
-        '@zzzz-/eslint-config-test'
+        '@zzzz-/eslint-config-test',
     ],
 };
