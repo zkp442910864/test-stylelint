@@ -5,6 +5,8 @@ module.exports = {
     // order 排序
     plugins: [
         'stylelint-order',
+        'stylelint-scss',
+        'stylelint-less',
     ],
     extends: [
         'stylelint-config-standard',
@@ -24,7 +26,7 @@ module.exports = {
         // 单行语言最大
         'declaration-block-single-line-max-declarations': 3,
         // 引号类型
-        'string-quotes': ['single', {avoidEscape : false}],
+        'string-quotes': ['single', {avoidEscape: false}],
         // {} 前后空格
         'block-opening-brace-space-after': 'never-single-line',
         'block-closing-brace-space-before': 'never-single-line',
