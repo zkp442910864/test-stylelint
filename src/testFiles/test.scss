@@ -1,75 +1,248 @@
-:root {--red: red;}
+:root {--red: #f56c6c;}
+
+// 封装属性
+$width: 5em;
+$width: 5em !global;
+$name: foo;
+$attr: border;
+
+
+/**
+* mixin使用1
+*/
+@mixin firefox-message($selector) {
+    body.firefox #{$selector}:before {
+        content: 'Hi, Firefox users!';
+    }
+}
+
+/**
+* mixin使用2
+*/
+@mixin large-text {
+    font: {
+        family: Arial;
+        size: 20px;
+        weight: bold;
+    }
+    color: #ff0000;
+}
+
+/**
+* mixin使用3
+*/
+@mixin sexy-border($color, $width) {
+    border: {
+        color: $color;
+        width: $width;
+        style: dashed;
+    }
+}
+
+/**
+* mixin使用4
+*/
+@mixin box-shadow($shadows...) {
+    -moz-box-shadow: $shadows;
+    -webkit-box-shadow: $shadows;
+    box-shadow: $shadows;
+}
+
+/**
+* mixin使用4
+* 父容器
+*/
+// @mixin apply-to-ie6-only {
+//     div {
+//         // 插入内容
+//         @content;
+//     }
+// }
+
+// 直接输出样式
+@include firefox-message('.header');
+// div{ .logo{...} }
+// @include apply-to-ie6-only {
+//     .logo {
+//         background-image: url('/logo.gif');
+//     }
+// }
+
+.page-title {
+    // 直接引入了样式
+    @include large-text;
+    @include sexy-border(blue, 1px);
+    @include box-shadow(0px 4px 5px #666, 2px 6px 10px #999);
+    padding: 4px;
+    margin-top: 10px;
+}
+
+
+/**
+* 函数指令
+*/
+@function grid-width($n) {
+    $grid-width: 40px;
+    $gutter-width: 10px;
+
+    @return $n * $grid-width + ($n - 1) * $gutter-width;
+}
+
+#sidebar {width: grid-width(5);}
+
+
+/**
+* 等于
+* p.foo {border-color: blue;}
+*/
+p.#{$name} {
+    #{$attr}-color: blue;
+}
 
 /* asd */
-.error-color {color: #f56c6c;}
-
-.main-color {color: #409eff;}
-
-.grey-color {color: #909399;}
-
-.font-bold {font-weight: bold;}
-.width-100 {width: 100%;}
-.height-100 {height: 100%;}
-.text-center {text-align: center;}
-.text-left {text-align: left;}
-.text-right {text-align: right;}
-
-.font-12 {font-size: 12px;}
-.font-14 {font-size: 14px;}
-.font-16 {font-size: 16px;}
-.font-18 {font-size: 18px;}
-.font-20 {font-size: 20px;}
-.font-22 {font-size: 22px;}
-
-.m-l-5 {margin-left: 5px;}
-.m-r-5 {margin-right: 5px;}
-.m-t-5 {margin-top: 5px;}
-.m-b-5 {margin-bottom: 5px;}
-
-.m-l-10 {margin-left: 10px;}
-.m-r-10 {margin-right: 10px;}
-.m-t-10 {margin-top: 10px;}
-.m-b-10 {margin-bottom: 10px;}
-
-.m-l-20 {margin-left: 20px;}
-.m-r-20 {margin-right: 20px;}
-.m-t-20 {margin-top: 20px;}
-.m-b-20 {margin-top: 20px; margin-bottom: 20px;}
-
-.flex,
-.flex-box {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
+.error-color {
+    color: var(--red);
 }
 
-.align-start {align-items: flex-start;}
-
-.justify-s-b {
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
+.main-color {
+    color: #409eff;
 }
 
-.justify-center {justify-content: center;}
+#main {
+    width: 97%;
+    color: #0f0;
 
-.justify-end {justify-content: flex-end;}
+    .redbox {
+        width: $width;
+        background-color: #f00;
+        color: #000;
+    }
 
-.justify-start {justify-content: flex-start;}
+    /**
+    * 等于
+    * #main p a, #main div a {}
+    */
+    p,
+    div {
+        font-size: 2em;
 
-.f-v {
-    -webkit-flex-direction: column;
-    flex-direction: column;
+        a {
+            font-weight: bold;
+        }
+    }
+
+    /**
+    * 等于
+    * #main:hover {}
+    */
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
-.flex-1 {
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
+
+/**
+* 等于
+*   .sidebar { width: 300px; }
+*   @media screen and (orientation: landscape) {
+*       .sidebar {
+*           width: 500px;
+*       }
+*   }
+*/
+.sidebar {
+    width: 300px;
+
+    @media screen and (orientation: landscape) {
+        width: 500px;
+    }
 }
 
-.flex-wrap {flex-wrap: wrap;}
-
-.bg {
-    background: url('https://');
-    transform: translate(1, 1) scale(3);
+/**
+* 继承样式
+* 等于
+*   .seriousError {display: flex;}
+*   .seriousError {border-width: 3px;}
+* 就是把 %foo-aimp 替换成 .seriousError
+*/
+%foo-aimp {display: flex;}
+.seriousError {
+    @extend %foo-aimp;
+    border-width: 3px;
 }
+
+/**
+* @at-root 使用
+* 等于
+*   .parent {border-width: 3px;}
+*   .child {border-width: 4px;}
+*/
+.parent {
+    border-width: 3px;
+    @at-root .child {
+        border-width: 4px;
+    }
+}
+
+/**
+* 循环1
+* 等于
+*   .item-1 {width: 2em;}
+*   .item-2 {width: 4em;}
+*   .item-3 {width: 6em;}
+*/
+@for $i from 1 through 3 {
+    .item-#{$i} {width: 2em * $i;}
+}
+
+/**
+* 循环2
+* 等于
+*   .puma-icon {background-image: url("/images/puma.png");}
+*   .sea-slug-icon {background-image: url("/images/sea-slug.png");}
+*   .egret-icon {background-image: url("/images/egret.png");}
+*   .salamander-icon {background-image: url("/images/salamander.png");}
+*/
+@each $item in puma, sea-slug, egret, salamander {
+    .#{$item}-icon {
+        background-image: url('/images/#{$item}.png');
+    }
+}
+
+/**
+* .puma-icon {..., cursor: default;}
+* .sea-slug-icon {..., cursor: pointer;}
+* .egret-icon {..., cursor: move;}
+*/
+@each $animal, $color, $cursor in (puma, black, default), (sea-slug, blue, pointer), (egret, white, move) {
+    .#{$animal}-icon {
+        background-image: url('/images/#{$animal}.png');
+        border: 2px solid $color;
+        cursor: $cursor;
+    }
+}
+
+/**
+* h1 { font-size: 2em; }
+* h2 { font-size: 1.5em; }
+* h3 { font-size: 1.2em; }
+*/
+@each $header, $size in (h1: 2em, h2: 1.5em, h3: 1.2em) {
+    #{$header} {
+        font-size: $size;
+    }
+}
+
+/**
+* 循环3
+* 等于
+*   .item-6 { width: 12em; }
+*   .item-4 { width: 8em; }
+*   .item-2 { width: 4em; }
+*/
+$i: 6;
+@while $i > 0 {
+    .item-#{$i} {width: 2em * $i;}
+    $i: $i - 2;
+}
+

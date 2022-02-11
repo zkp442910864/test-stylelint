@@ -1,75 +1,92 @@
-:root {--red: red;}
-
-/* asd */
-.error-color {color: #f56c6c;}
-
-.main-color {color: #409eff;}
-
-.grey-color {color: #909399;}
-
-.font-bold {font-weight: bold;}
-.width-100 {width: 100%;}
-.height-100 {height: 100%;}
-.text-center {text-align: center;}
-.text-left {text-align: left;}
-.text-right {text-align: right;}
-
-.font-12 {font-size: 12px;}
-.font-14 {font-size: 14px;}
-.font-16 {font-size: 16px;}
-.font-18 {font-size: 18px;}
-.font-20 {font-size: 20px;}
-.font-22 {font-size: 22px;}
-
-.m-l-5 {margin-left: 5px;}
-.m-r-5 {margin-right: 5px;}
-.m-t-5 {margin-top: 5px;}
-.m-b-5 {margin-bottom: 5px;}
-
-.m-l-10 {margin-left: 10px;}
-.m-r-10 {margin-right: 10px;}
-.m-t-10 {margin-top: 10px;}
-.m-b-10 {margin-bottom: 10px;}
-
-.m-l-20 {margin-left: 20px;}
-.m-r-20 {margin-right: 20px;}
-.m-t-20 {margin-top: 20px;}
-.m-b-20 {margin-top: 20px; margin-bottom: 20px;}
-
-.flex,
-.flex-box {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
+// 封装属性
+@width: 10px;
+@height: @width + 10px;
+@base: 2cm * 3mm; // result is 6cm
+@var: 50vh/2; // result is 25vh
+// map属性
+#colors() {
+    primary: blue;
+    secondary: green;
 }
 
-.align-start {align-items: flex-start;}
-
-.justify-s-b {
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
+// 封装函数
+.bordered {
+    border-top: dotted 1px black;
+    border-bottom: solid 2px black;
 }
 
-.justify-center {justify-content: center;}
+// each 解析不了。。。
+// @selectors: blue, green, red;
+// each(@selectors, {
+//   .sel-@{value} {
+//     a: b;
+//   }
+// });
 
-.justify-end {justify-content: flex-end;}
 
-.justify-start {justify-content: flex-start;}
+#header {
+    width: @width;
+    height: @height;
+    color: #colors[primary];
+    .bordered();
 
-.f-v {
-    -webkit-flex-direction: column;
-    flex-direction: column;
+    .navigation {
+        font-size: 12px;
+    }
+
+    // & 指向自身(#header
+
+    /**
+    * 等于
+    * #header::after{}
+    */
+    &::after {
+        display: block;
+        height: 0;
+        clear: both;
+        content: ' ';
+        font-size: 0;
+        visibility: hidden;
+    }
+
+    /**
+    * 等于
+    * #header-ok::after{}
+    */
+    &-ok {
+        background-image: url('ok.png');
+    }
+
+    /**
+    * 等于
+    * @media (min-width: 1280px) {
+    *    .#header {
+    *        width: 800px;
+    *    }
+    * }
+    */
+    @media (min-width: 1280px) {
+        width: 800px;
+    }
 }
 
-.flex-1 {
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
+.color-weak {
+    filter: invert(80%);
 }
 
-.flex-wrap {flex-wrap: wrap;}
-
-.bg {
-    background: url('https://');
-    transform: translate(1, 1) scale(3);
+.ant-layout {
+    min-height: 100vh;
 }
+
+// CSS Modules 语法 :global
+// .put-performance {
+//     :global {
+//         .ant-modal-content {
+//             padding-top: 0;
+//         }
+
+//         .ant-modal-body {
+//             padding-top: 0;
+//         }
+//     }
+// }

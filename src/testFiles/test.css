@@ -3,6 +3,8 @@
 /* asd */
 .error-color {color: #f56c6c;}
 
+.error-color2 {}
+
 .main-color {color: #409eff;}
 
 .grey-color {color: #909399;}
@@ -43,6 +45,7 @@
     -webkit-align-items: center;
     align-items: center;
 }
+
 
 .align-start {align-items: flex-start;}
 
