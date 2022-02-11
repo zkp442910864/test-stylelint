@@ -15,6 +15,10 @@
         "type": "git",
         "url": "https://github.com/zkp442910864/test-stylelint"
     },
+    "files": [
+        ".stylelintrc.js",
+        "indes.js"
+    ],
     "devDependencies": {
         "@zzzz-/eslint-config-test": "^1.0.18",
         "eslint": "^8.8.0"
