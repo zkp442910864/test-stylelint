@@ -9,7 +9,7 @@
         "test2": "npm publish"
     },
     "author": "",
-    "license": "ISC",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/zkp442910864/test-stylelint"
@@ -17,6 +17,12 @@
     "files": [
         ".stylelintrc.js",
         "index.js"
+    ],
+    "keywords": [
+        "stylelint",
+        "css",
+        "less",
+        "scss"
     ],
     "devDependencies": {
         "@zzzz-/eslint-config-test": "^1.0.18",
