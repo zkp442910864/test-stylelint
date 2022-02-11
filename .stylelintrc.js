@@ -7,7 +7,7 @@ module.exports = {
     ],
     // 继承其它库规则，排后面的优先级最高
     extends: [
-        // 'stylelint-config-recommended',
+        'stylelint-config-recommended',
         'stylelint-config-idiomatic-order',
         'stylelint-config-html',
         'stylelint-config-standard',
