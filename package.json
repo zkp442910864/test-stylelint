@@ -16,7 +16,7 @@
     },
     "files": [
         ".stylelintrc.js",
-        "indes.js"
+        "index.js"
     ],
     "devDependencies": {
         "@zzzz-/eslint-config-test": "^1.0.18",
