@@ -23,6 +23,14 @@
 //   }
 // });
 
+@widthSize: 50, 100, 150, 200, 250, 300;
+each(@widthSize, {
+    .width@{value} {
+        width: (@value * 1px) !important;
+        min-width: (@value * 1px) !important;
+    }
+});
+
 
 #header {
     width: @width;
